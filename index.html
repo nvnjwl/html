@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <title>Article Player</title>
+    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="reset.css" type="text/css" rel="stylesheet">
+    <link href="main.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="slikeheader.js"></script>
+    <script type="text/javascript" src="slikeconfig.js"></script>
+</head>
+
+<body onLoad="setTimeout(function(){loadVideo();}, 100);">
+    <div id="fakeHeader" class="slikeHtml" slike-html="header.html"></div>
+    <section class="mBody">
+        <h1 class="text-center">Slike Player</h1>
+        <div id="outerPlayer" class="slikecontainer playerSize">
+            <div id="playerContainer"></div>
+        </div>
+        <script type="text/javascript">
+        function loadVideo() {
+            var jsWebUrl = location.protocol + '//' + location.host;
+            var player;
+            var defaultConfig = slikeDefaultConfig;
+            var currentConfig = JSON.stringify(defaultConfig);
+            currentConfig = JSON.parse(currentConfig);
+            currentConfig.video.id = "1xn8nipoll";
+
+            function retry() {
+                var retryInterval = 100;
+                if (typeof S != "undefined" && typeof S.load == "function") {
+                    S.load('playerContainer', currentConfig, function(inst) {
+                        console.log("Player load Completed");
+                        player = inst;
+                    });
+                } else {
+                    setTimeout(function() {
+                        retry();
+                    }, retryInterval);
+                }
+            }
+            retry();
+        }
+        </script>
+    </section>
+    <div id="fakeFooter" class="slikeHtml" slike-html="footer.html">
+    </div>
+</body>
+
+</html>
